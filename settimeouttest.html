@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>settimeouttest</title>
+<script>
+function Test(){
+console.log("kita");
+
+}
+function start(){
+  console.log("clicked!");
+  setTimeout(Test, 1000);
+  console.log("!");
+
+}
+</script>
+<input type="button" value = "押してください" onClick="start();" />
