@@ -65,6 +65,7 @@ playerImg.onload = function() {
    plImg = true;
 }
 enemyImg.onload = function() {
+
   eImg = true;
 }
 // https://www.nasa.gov/mission_pages/hubble/multimedia/index.html
@@ -107,8 +108,11 @@ function Enemy(canvas) {
         } else if (1 <= life) {
             ctx.beginPath();
           //  ctx.fillStyle = lifeProp[life].color;
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.rotate(Math.PI / 2);
+            ctx.drawImage(enemyImg,-enemyImg.width/2,-enemyImg.height/2);            
             ctx.arc(x, y, 5, 0, Math.PI*2, false);
-            ctx.drawImage(enemyImg, x - 20, y - 20, 40, 40);
+          //  ctx.drawImage(enemyImg, x - 20, y - 20, 40, 40);
             ctx.fill();
         }
 
@@ -194,7 +198,7 @@ function Enemy(canvas) {
         bullets.forEach(function(bullet) {
             bullet.x += dt*bullet.vx/1000;
             bullet.y += dt*bullet.vy/1000;
-            bullet.life -= dt/1000/1.0;
+            bullet.life -= dt/1000/1.0; //弾のライフ(defalt 1.0)
         });
 
         bullets = bullets.filter(function(bullet) {
@@ -385,12 +389,19 @@ window.onload = function() {
                     playSE(shotAudio);
                     lastShoot = tick;
                     if(bullet.inUse){
-                      if (keys[39 /*Right*/]) { myX--; }
-                      if (keys[37 /*Left */]) { myX++; }
-                      if (keys[38 /*Up   */]) { myY++; }
-                      if (keys[40 /*Down */]) { myY--; }
+                      if (keys[39 /*Right*/]) { myX -= 2; }
+                      if (keys[37 /*Left */]) { myX += 2; }
+                      if (keys[38 /*Up   */]) { myY += 2; }
+                      if (keys[40 /*Down */]) { myY -= 2; }
                     }
                 }
+                if(lastShoot == undefined || 1000 < tick - lastShoot){
+                   var bulletNotInUse = bulets.filter(function(bullet){
+                     return bullet.inUse;
+                   });
+
+                }
+
             }
 
         }
