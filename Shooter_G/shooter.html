@@ -79,7 +79,7 @@ function Enemy(canvas) {
     var x, y;
     var vx, vy;
 
-    var life = 10;
+    var life = 1;
     var dying = false;
     var explode = new Explode();
 
@@ -92,21 +92,13 @@ function Enemy(canvas) {
         x = canvas.width*Math.random();
         y = -er;
         vx = 0;
-        vy = 100*Math.random() + 10;
+        vy = 100*Math.random() + 50;
     };
     spawn();
 
     var lifeProp = [];
-     lifeProp[10]= { color: 'white', fireP: 0.001, numB: 30, daze: 2 };
-     lifeProp[9] = { color: 'white', fireP: 0.002, numB: 20, daze: 2 };
-     lifeProp[8] = { color: 'white', fireP: 0.003, numB: 20, daze: 2 };
-     lifeProp[7] = { color: 'yellow',fireP: 0.004, numB: 20, daze: 4 };
-     lifeProp[6] = { color: 'yellow',fireP: 0.005, numB: 20, daze: 4 };
-     lifeProp[5] = { color: 'yellow',fireP: 0.006, numB: 20, daze: 4 };
-     lifeProp[4] = { color: 'red',   fireP: 0.007, numB: 20, daze: 6 };
-     lifeProp[3] = { color: 'red',   fireP: 0.008, numB: 20, daze: 6 };
-     lifeProp[2] = { color: 'red',   fireP: 0.009, numB: 20, daze: 6 };
-     lifeProp[1] = { color: 'red',   fireP: 0.1,   numB: 20, daze: 10 };
+
+     lifeProp[1] = { color: 'red',   fireP: 0,   numB: 20, daze: 10 };
 
     this.draw = function(ctx) {
 
@@ -191,8 +183,8 @@ function Enemy(canvas) {
         if (0 < life) {
             x += dt*vx/1000;
             x += lifeProp[life].daze*Math.cos(th);
-            th += 1.5*dt*2*Math.PI/1500;
-            y += dt*vy/100;
+            th += 1.5*dt*2*Math.PI/1000;
+            y += dt*vy/1000;
             if (x < -er
             || canvas.width + er < x
             || canvas.height + er < y) {
@@ -314,7 +306,7 @@ window.onload = function() {
         switch (status) {
         case Status.title:
             msg = 'Press space to start';
-            numEnemies = 1;
+            numEnemies = 50;
             break;
         case Status.toStart:
             myX = canvas.width/2;
@@ -464,7 +456,7 @@ window.onload = function() {
             if (status == Status.inGame && remainingEnemies <= 0) {
                  status = Status.gameClear;
                  muteSE = true;
-                 numEnemies++;
+                 numEnemies += 10;
 
             }
             ctx.font = '20pt Calibri';
