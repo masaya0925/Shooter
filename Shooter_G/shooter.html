@@ -109,10 +109,9 @@ function Enemy(canvas) {
             ctx.beginPath();
           //  ctx.fillStyle = lifeProp[life].color;
             ctx.translate(canvas.width / 2, canvas.height / 2);
-            ctx.rotate(Math.PI / 2);
-            ctx.drawImage(enemyImg,-enemyImg.width/2,-enemyImg.height/2);            
+            ctx.rotate(Math.PI);
             ctx.arc(x, y, 5, 0, Math.PI*2, false);
-          //  ctx.drawImage(enemyImg, x - 20, y - 20, 40, 40);
+            ctx.drawImage(enemyImg, x - 20, y - 20, 40, 40);
             ctx.fill();
         }
 
