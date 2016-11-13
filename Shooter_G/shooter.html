@@ -166,10 +166,28 @@ function Enemy(canvas) {
     };
 
     var lastTick;
+    this.move =　function(){
+      var tick = Date.now();
+      var dt = tick - lastTick;
+      y += dt*vy/1000;
+      console.log(dt);
+      if (x < -er
+      || canvas.width + er < x
+      || canvas.height + er < y) {
+          spawn();
+      }
+    };
+
+    var moveTick = 0;
+    var stopTick = 0;
     var th = Math.PI*Math.random();
+    var timer;
+    var isMove;
+    var test = true;
+    var randomMoveTime;
+    var randomStopTime;
 
     this.update = function() {
-
         if (dying && !explode.update()) {
             dying = false;
         }
@@ -181,16 +199,26 @@ function Enemy(canvas) {
         var tick = Date.now();
         var dt = tick - lastTick;
         if (0 < life) {
-            x += dt*vx/1000;
-            x += lifeProp[life].daze*Math.cos(th);
-            th += 1.5*dt*2*Math.PI/1000;
-            y += dt*vy/1000;
-            if (x < -er
-            || canvas.width + er < x
-            || canvas.height + er < y) {
-                spawn();
+          if(!isMove){
+            if((stopTick != 0 && Date.now() - stopTick > randomStopTime) || stopTick == 0){
+              isMove = true;
+              randomMoveTime = Math.floor(Math.random()*(1000-300)+300);
+              moveTick = Date.now();
+          }
+        }
+          if(isMove){
+            if(Date.now() - moveTick > randomMoveTime){
+              clearInterval(timer);
+              isMove = false;
+              randomStopTime = Math.floor(Math.random()*(500-150)+150);
+
+              stopTick = Date.now();
+            } else if(Date.now() - moveTick < randomMoveTime){
+              this.move();
             }
         }
+      }
+
         bullets.forEach(function(bullet) {
             bullet.x += dt*bullet.vx/1000;
             bullet.y += dt*bullet.vy/1000;
