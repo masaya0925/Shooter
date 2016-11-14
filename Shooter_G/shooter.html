@@ -10,7 +10,7 @@ canvas {
 
 <!-- http://taira-komori.jpn.org/sound/ -->
 <audio id="shotAudio">
-  <source src="beam.mp3">
+  <source src="missile1.mp3">
   Your WEB browser does not support audio tag.
 </audio>
 <audio id="explosionAudio">
@@ -92,7 +92,7 @@ function Enemy(canvas) {
         x = canvas.width*Math.random();
         y = -er;
         vx = 0;
-        vy = 100*Math.random() + 50;
+        vy = 200*Math.random() + 100;
     };
     spawn();
 
@@ -170,7 +170,7 @@ function Enemy(canvas) {
       var tick = Date.now();
       var dt = tick - lastTick;
       y += dt*vy/1000;
-      console.log(dt);
+    //  console.log(dt);
       if (x < -er
       || canvas.width + er < x
       || canvas.height + er < y) {
