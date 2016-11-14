@@ -107,8 +107,8 @@ function Enemy(canvas) {
         } else if (1 <= life) {
             ctx.beginPath();
           //ctx.fillStyle = lifeProp[life].color;
-          //ctx.arc(x, y, 5, 0, Math.PI*2, false);
-            ctx.drawImage(enemyImg, x - 20, y - 20, 40, 40);
+          ctx.arc(x, y, 5, 0, Math.PI*2, false);
+          //  ctx.drawImage(enemyImg, x - 20, y - 20, 40, 40);
             ctx.fill();
         }
 
@@ -202,7 +202,7 @@ function Enemy(canvas) {
           if(!isMove){
             if((stopTick != 0 && Date.now() - stopTick > randomStopTime) || stopTick == 0){
               isMove = true;
-              randomMoveTime = Math.floor(Math.random()*(1000-300)+300);
+              randomMoveTime = Math.floor(Math.random()*(1500-300)+300);
               moveTick = Date.now();
           }
         }
@@ -333,7 +333,7 @@ window.onload = function() {
         switch (status) {
         case Status.title:
             msg = 'Press space to start';
-            numEnemies = 50;
+            numEnemies = 1;
             break;
         case Status.toStart:
             myX = canvas.width/2;
@@ -490,8 +490,11 @@ window.onload = function() {
             if (status == Status.inGame && remainingEnemies <= 0) {
                  status = Status.gameClear;
                  muteSE = true;
-                 numEnemies += 10;
-
+                if (numEnemies >= 10) {
+                    numEnemies += 10;
+                } else {
+                    numEnemies += 9;
+                }
             }
             ctx.font = '20pt Calibri';
             ctx.fillStyle = 'white';
